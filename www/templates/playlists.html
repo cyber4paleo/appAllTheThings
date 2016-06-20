@@ -1,9 +1,18 @@
-<ion-view view-title="Playlists">
+<ion-view view-title="">
   <ion-content>
-    <ion-list>
-      <ion-item ng-repeat="playlist in playlists" href="#/app/playlists/{{playlist.id}}">
-        {{playlist.title}}
-      </ion-item>
-    </ion-list>
+    <button class="button button-block button-royal">
+        Pull Macrostrat Data
+    </button>
+    <ion-scroll zooming="false" direction="y" style="width: 100%; height: 100px">
+    <div style="width: 5000px; height: 5000px"/>
+
+
+    <button class="button button-block button-royal">
+        Get Keywords
+    </button>
+    <ion-scroll zooming="false" direction="y" style="width: 100%; height: 100px">
+      <div style="width: 5000px; height: 5000px"></div>
+    </ion-scroll>
+
   </ion-content>
 </ion-view>
