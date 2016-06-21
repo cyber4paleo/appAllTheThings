@@ -41,16 +41,47 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
+.controller('MainViewCtrl', function($scope, $http) {
+  $scope.isMacroReturned = false;
+  $scope.isGDDReady = false;
+  $scope.macrodata = undefined;
+  $scope.gdddata = [];
+  $scope.keywords = [];
+
+  $scope.getGDD=function() {
+    if($scope.keywords.length>0){
+      var term = $scope.keywords.pop();
+      $http({
+        method: 'GET',
+        url: 'https://geodeepdive.org/api/v1//snippets?term='+term
+      }).then(function successCallback(response) {
+        $scope.gdddata=$scope.gdddata.concat(response.data.success.data);
+        $scope.getGDD();
+      }, function errorCallback(response) {
+        alert("Something is rong with the geo deep dive return");
+      });
+    }else{
+      $scope.isGDDReady=true;
+      $scope.gdddata=JSON.stringify($scope.gdddata);
+    }
+  };
+
+  var wkt="POLYGON((-101.42 39.93,-99.48 39.89,-98.56 39.39,-98.17 38.81,-98.04 38.12,-98.18 37.43,-98.57 36.85,-99.16 36.46,-99.85 36.33,-101.76 36.36,-102.68 36.85,-103.18 37.77,-103.09 38.81,-102.43 39.62,-101.42 39.93))";
+  $scope.getMacro= function() {
+    $http({
+      method: 'GET',
+      url: 'https://macrostrat.org/api/v2/carto/small?format=geojson_bare&shape='+wkt
+    }).then(function successCallback(response) {
+        console.log(response.data);
+        for(var i=0; i<response.data.features.length; i++){
+          var name = response.data.features[i].properties.name;
+          if($scope.keywords.indexOf(name)==-1) $scope.keywords.push(name);
+        }
+        $scope.macrodata= JSON.stringify(response.data);
+        $scope.isMacroReturned = true;
+      }, function errorCallback(response) {
+        alert("Something is rong with the macro return");
+      });
+    }
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
-});
