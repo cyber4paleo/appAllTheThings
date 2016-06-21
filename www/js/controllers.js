@@ -86,7 +86,7 @@ angular.module('starter.controllers', [])
             "facilities": ['laccore']
         };
         var gddpromises = [];
-        $http.post("http://geology-tmitest.oit.umn.edu/api/laccoreSample", data).success(function(response) {
+        $http.post("http://geology-tmitest.oit.umn.edu/api/laccoreSample", data, {timeout:10000}).success(function(response) {
             for (var i = 0; i < response.data.length; i++) {
                 var item = response.data[i];
                 gddpromises.push($scope.getGDD(item));
