@@ -69,6 +69,7 @@ angular.module('starter.controllers', [])
     };
 
     $scope.getLaccore = function() {
+        $scope.laccoredata = [];
         var data = {
             "shape": $scope.data.wkt,
             "facilities": ['laccore']
