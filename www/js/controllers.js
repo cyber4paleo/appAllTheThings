@@ -86,18 +86,23 @@ angular.module('starter.controllers', [])
             "facilities": ['laccore']
         };
         var gddpromises = [];
-        $http.post("http://geology-tmitest.oit.umn.edu/api/laccoreSample", data, {timeout:10000}).success(function(response) {
-            for (var i = 0; i < response.data.length; i++) {
-                var item = response.data[i];
-                gddpromises.push($scope.getGDD(item));
+        $http.post("http://geology-tmitest.oit.umn.edu/api/laccoreSample", data, {timeout:8000}).success(function(response) {
+            if(response.data && response.data.length>0){
+                for (var i = 0; i < response.data.length; i++) {
+                    var item = response.data[i];
+                    gddpromises.push($scope.getGDD(item));
+                }
+                $q.all(gddpromises).then(function(items) {
+                    $scope.hide();
+                    $scope.laccoredata=$scope.laccoredata.concat(items);
+                    $scope.isLacReturned = true;
+                }, function() {
+                    $scope.isLacReturned = false;
+                });
+            }else{
+                $scope.hide();
+                alert("No data returned from Laccore");
             }
-            $q.all(gddpromises).then(function(items) {
-                $scope.hide()
-                $scope.laccoredata=$scope.laccoredata.concat(items);
-                $scope.isLacReturned = true;
-            }, function() {
-                $scope.isLacReturned = false;
-            });
         }).error(function() {
             alert("Something is rong with the laccore return");
         });
