@@ -7,13 +7,6 @@
   user-select: text;
 }
 
-.scroll {
-  -webkit-user-select: text;
-  -khtml-user-select: text;
-  -moz-user-select: text;
-  user-select: text;
-}
-
 strong {
   color: #3d81f2;
 }

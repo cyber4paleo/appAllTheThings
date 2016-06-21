@@ -1,5 +1,10 @@
 <ion-view view-title="DataDeepCore">
   <ion-content>
+    <div>
+      <label class="item item-input">
+        <input type="text" placeholder="WKT Polygon" ng-model="data.wkt">
+      </label>
+    </div>
     <button class="button button-block button-positive" ng-click="getLaccore()">
       Pull LacCore Data & GeoDeepDive Papers from PIs
     </button>
@@ -7,7 +12,7 @@
     <div style="width: 100%;" ng-if="isLacReturned" class="selectable">
       <div class="row selectable item-text-wrap" ng-repeat="data in laccoredata" style="border-top: 1px solid; padding-bottom:10px;">
         <div class="col col-33">
-          <div class="selectable"><strong>PI:</strong>{ {data.pi}}</div>
+          <div class="selectable"><strong>PI:</strong>{{data.pi}}</div>
           <div><strong>Sample:</strong> {{data.sample}}</div>
           <div><strong>Lake Name:</strong> {{data.lake}}</div>
           <div><strong>Core Length:</strong> {{data.coreLength}}</div>

@@ -44,6 +44,7 @@ angular.module('starter.controllers', [])
 .controller('MainViewCtrl', function($scope, $http, $q){
     $scope.isLacReturned = false;
     $scope.laccoredata = [];
+    $scope.data ={wkt: "POLYGON((-78.6 53.03,-77.8 52.9,-77.22 52.5,-76.83 51.92,-76.69 51.23,-76.83 50.54,-77.22 49.96,-77.8 49.57,-78.49 49.43,-79.29 49.57,-79.87 49.96,-80.26 50.54,-80.4 51.23,-80.27 51.92,-79.88 52.5,-79.29 52.9,-78.6 53.03))"};
 
     $scope.getGDD = function(item) {
         var defer = $q.defer();
@@ -61,12 +62,12 @@ angular.module('starter.controllers', [])
     };
 
     $scope.getTerm = function(item) {
-        return item.pi;
+        return item.pi+" "+item.lake;
     };
 
     $scope.getLaccore = function() {
         var data = {
-            "shape": "POLYGON((-101.42 39.93,-99.48 39.89,-98.56 39.39,-98.17 38.81,-98.04 38.12,-98.18 37.43,-98.57 36.85,-99.16 36.46,-99.85 36.33,-101.76 36.36,-102.68 36.85,-103.18 37.77,-103.09 38.81,-102.43 39.62,-101.42 39.93))",
+            "shape": $scope.data.wkt,
             "facilities": ['laccore']
         };
         var gddpromises = [];
@@ -77,7 +78,6 @@ angular.module('starter.controllers', [])
             }
             $q.all(gddpromises).then(function(items) {
                 $scope.laccoredata=$scope.laccoredata.concat(items);
-                console.log($scope.laccoredata);
                 $scope.isLacReturned = true;
             }, function() {
                 $scope.isLacReturned = false;
