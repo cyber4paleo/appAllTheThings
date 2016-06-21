@@ -1,27 +1,28 @@
-<ion-view view-title="DataDeepSearch">
-   <ion-content>
-     <button class="button button-block button-royal" ng-click="getLaccore()">
-         Pull Macrostrat Data
-     </button>
+<ion-view view-title="DataDeepCore">
+  <ion-content>
+    <button class="button button-block button-positive" ng-click="getLaccore()">
+      Pull LacCore Data & GeoDeepDive Papers from PIs
+    </button>
 
-     <div style="width: 100%; height: 400px; overflow: scroll;" ng-if="isLacReturned">
-     	<div class="row" ng-repeat="data in laccoredata" style="border-bottom:1px solid; padding-bottom:10px;">
-     		<div class="col col-50">
-	     		<div><stong>PI: </stong>{{data.pi}}</div>
-	     		<div><stong>Sample: </stong>{{data.sample}}</div>
-	     		<div><stong>Lake: </stong>{{data.lake}}</div>
-	     		<div><stong>Core Length: </stong>{{data.coreLength}}</div>
-     		</div>
+    <div style="width: 100%;" ng-if="isLacReturned" class="selectable">
+      <div class="row selectable item-text-wrap" ng-repeat="data in laccoredata" style="border-top: 1px solid; padding-bottom:10px;">
+        <div class="col col-33">
+          <div class="selectable"><strong>PI:</strong>{ {data.pi}}</div>
+          <div><strong>Sample:</strong> {{data.sample}}</div>
+          <div><strong>Lake Name:</strong> {{data.lake}}</div>
+          <div><strong>Core Length:</strong> {{data.coreLength}}</div>
+        </div>
 
-     		<div class="col col-50" style="border-left:1px solid;">
-	     		<div ng-repeat="gdd in data.GDD">
-	     			<div><a ng-href="{{gdd.URL}}">{{gdd.URL}}</a></div>
-	     			<div>{{gdd.source}}</div>
-	     			<div>{{gdd.pubname}}</div>
-	     		</div>
-     		</div>
-     	</div>
-     </div>
+        <div class="col col-67" style="border: 1px solid padding-bottom: 10px;">
+          <div ng-repeat="gdd in data.GDD" class="gdd" style="border-bottom: 1px solid">
+            <div><strong>Publication Title:</strong> {{gdd.title}}</div>
+            <div><strong>URL:</strong> <a ng-href="{{gdd.URL}}">{{gdd.URL}}</a></div>
+            <div><strong>Source:</strong> {{gdd.source}}</div>
+            <div><strong>Publication Name:</strong> {{gdd.pubname}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-   </ion-content>
+  </ion-content>
 </ion-view>
