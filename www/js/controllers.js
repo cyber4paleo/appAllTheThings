@@ -62,7 +62,10 @@ angular.module('starter.controllers', [])
     };
 
     $scope.getTerm = function(item) {
-        return item.pi+" "+item.lake;
+        var str = "";
+        if(item.pi) str+=item.pi;
+        if(item.lake) str+=item.lake;
+        return str;
     };
 
     $scope.getLaccore = function() {
